@@ -27,19 +27,25 @@
   </div>
 
  <!-- Log in -->
- <form>
+ {{#if resObj.msg}}
+ <div class="alert alert-danger" role="alert">
+   Error:{{resObj.msg}}
+ </div>
+ {{/if}}
+ <form method="post" enctype="application/x-www-form-urlencoded" action="login_submit">
    <div class="container mt-3 border-shrink">
      <div class="row justify-content-center">
+     
       <div class="form-group">
-        <label for="emailLogIn">Email address</label>
-        <input type="email" class="form-control" id="emailLogIn" aria-describedby="emailHelp" placeholder="Enter email">
+        <label>User Name</label>
+        <input type="text" name="username" value="{{resObj.username}}" class="form-control" id="emailLogIn"  placeholder="Enter username">
       </div>
      </div>
     
      <div class="row justify-content-center">
       <div class="form-group">
         <label for="passwordLogIn">Password</label>
-        <input type="password" class="form-control" id="emailLogIn" placeholder="Password">
+        <input type="password" name="password" value="{{resObj.password}}" class="form-control" id="emailLogIn" placeholder="Password">
       </div>
      </div>
 

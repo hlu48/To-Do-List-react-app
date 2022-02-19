@@ -6,29 +6,92 @@
 
 const express = require('express');
 const app = express();
+const {
+  userLogin,
+  registerUser,
+  getUserDashboard,
+} = require("./controllers/userController");
+
 const path = require('path');
+app.use(express.static(path.join(__dirname, "./src")));
 const port = 3000;
+const exphbs = require('express-handlebars');
+const bodyParser = require('body-parser');
+app.engine('.hbs', exphbs.engine({ extname: '.hbs' }));
+app.set('view engine', '.hbs');
+
+// app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
 
-app.get('/',function(req,res){
-  res.sendFile(path.join(__dirname+'/src/home.html'));
+app.get("/",function(req,res){
+  res.render("home",{msg:"",layout:false});
 });
 
-app.get('/cwh',function(req,res){
-  res.sendFile(path.join(__dirname, '/src/cwh.html'));
+
+// app.get("/dashboard",function(req,res){
+//   res.render("dashboard",{msg:"",layout:false})
+// })
+
+
+app.get("/cwh", (req, res) => {
+  res.render("cwh",{msg:"",layout:false});
+});
+app.get("/login", (req, res) => {
+  res.render("login",{msg:"",layout:false});
 });
 
-app.get('/registration',function(req,res){
-    res.sendFile(path.join(__dirname, '/src/registration.html'));
-  });
+app.post("/login_submit",function(req,res){
+  
+  let resObj ={
+    username: req.body.username,
+    password: req.body.password,
+    msg: ""
+  }
+ 
+  // if(resObj.password&&resObj.username){
+  //   msg = "";
+  // } else{
+  //   resObj.msg=" Username or password cannot be empty"
+  // }
+  if (resObj.password === "" || resObj.username === "") {
+    resObj.msg= "Email/Password fields must not be empty!";}else if
+    ( /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(resObj.username)) {
+    resObj.msg=" Username must not contain special characters!"
+  }else {
+    res.redirect("/dashboard");
+  }
+  res.render("login",{resObj:resObj,layout:false});
 
-app.get('/login',function(req,res){
-  res.sendFile(path.join(__dirname, '/src/login.html'));
+
+
+
+
+});
+
+
+// app.post("/login", userLogin);
+
+app.get("/registration", (req, res) => {
+  res.render("registration",{msg:"",layout:false});
+});
+
+app.post("/registration", registerUser);
+
+app.use((req, res) => {
+  res.status(404).send("Page Not Found");
+});
+
+// This use() will add an error handler function to
+// catch all errors.
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
 });
 
 
 app.use(express.static("src"));
 app.listen(process.env.PORT || port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`listening at http://localhost:${port}`)
 })
