@@ -1,17 +1,3 @@
-const userLogin = (req, res) => {
-  if (req.body.userName === "" || req.body.password === "") {
-    const error = "Email/Password fields must not be empty!";
-    res.render("login", { error });
-  } else if (
-    /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(req.body.userName)
-  ) {
-    res.render("login", {
-      error: "Username must not contain special characters!",
-    });
-  } else {
-    res.redirect("/dashboard");
-  }
-};
 
 const registerUser = (req, res) => {
   const error = "Fields must not be empty";
@@ -48,12 +34,4 @@ const registerUser = (req, res) => {
   }
 };
 
-const getUserDashboard = (req, res) => {
-  res.render("dashboard",{msg:"",layout:false});
-};
 
-module.exports = {
-  userLogin,
-  registerUser,
-  getUserDashboard,
-};

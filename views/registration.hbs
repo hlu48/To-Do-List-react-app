@@ -26,33 +26,40 @@
     <img src="./img/icon.jpg" width="100px">
   </div>
   <!-- Registration -->
-  <form>
+   {{#if resObj.msg}}
+ <div class="alert alert-danger" role="alert">
+   Error:{{resObj.msg}}
+ </div>
+ {{/if}}
+
+ <form method="post" enctype="application/x-www-form-urlencoded" action="registration_submit">
+
     <div class="container mt-4">
      
         <form>
             <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="firstName">First Name</label>
-                  <input type="text" class="form-control" id="firstName" placeholder="First Name">
+                  <input type="text" class="form-control" name= "firstname" id="firstName" placeholder="First Name">
                 </div>
                 <div class="form-group col-md-6">
                   <label for="lastName">Last Name</label>
-                  <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+                  <input type="text" class="form-control" name="lastname" id="lastName" placeholder="Last Name">
                 </div>
               </div>
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputEmail4">Email</label>
-                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                <input type="email" class="form-control" name="email" id="inputEmail4" placeholder="Email">
               </div>
               <div class="form-group col-md-6">
                 <label for="inputPassword4">Password</label>
-                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                <input type="password" class="form-control" name="password" id="inputPassword4" placeholder="Password">
               </div>
             </div>
             <div class="form-group">
               <label for="inputAddress">Address</label>
-              <input type="text" class="form-control" id="inputAddress" placeholder="111 First St">
+              <input type="text" class="form-control" name="address" id="inputAddress" placeholder="111 First St">
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
@@ -95,6 +102,7 @@
           </form>
 
     </div>
+  </form>
 
       <!-- Footer -->
 <footer class="text-center text-lg-start text-muted">

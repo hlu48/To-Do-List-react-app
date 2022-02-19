@@ -6,11 +6,7 @@
 
 const express = require('express');
 const app = express();
-const {
-  userLogin,
-  registerUser,
-  getUserDashboard,
-} = require("./controllers/userController");
+
 
 const path = require('path');
 app.use(express.static(path.join(__dirname, "./src")));
@@ -20,7 +16,6 @@ const bodyParser = require('body-parser');
 app.engine('.hbs', exphbs.engine({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
 
-// app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
@@ -28,13 +23,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get("/",function(req,res){
   res.render("home",{msg:"",layout:false});
 });
-
-
-// app.get("/dashboard",function(req,res){
-//   res.render("dashboard",{msg:"",layout:false})
-// })
-
-
+app.get("/dashboard",function(req,res){
+  res.render("dashboard",{msg:"",layout:false})
+})
 app.get("/cwh", (req, res) => {
   res.render("cwh",{msg:"",layout:false});
 });
@@ -42,42 +33,52 @@ app.get("/login", (req, res) => {
   res.render("login",{msg:"",layout:false});
 });
 
+
+//validate login form
 app.post("/login_submit",function(req,res){
   
   let resObj ={
     username: req.body.username,
     password: req.body.password,
+    formSubmitted: req.body.submit,
     msg: ""
   }
- 
-  // if(resObj.password&&resObj.username){
-  //   msg = "";
-  // } else{
-  //   resObj.msg=" Username or password cannot be empty"
-  // }
+
   if (resObj.password === "" || resObj.username === "") {
-    resObj.msg= "Email/Password fields must not be empty!";}else if
-    ( /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(resObj.username)) {
-    resObj.msg=" Username must not contain special characters!"
-  }else {
-    res.redirect("/dashboard");
+    resObj.msg= " Username or password cannot be empty!";
+  }else if 
+  ( /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(resObj.username)) {
+    resObj.msg=" Username cannot contain any special characters!"
+  }else{
+    res.render("dashboard",{resObj:resObj,layout:false})
   }
   res.render("login",{resObj:resObj,layout:false});
-
-
-
-
-
 });
 
-
-// app.post("/login", userLogin);
 
 app.get("/registration", (req, res) => {
   res.render("registration",{msg:"",layout:false});
 });
+//validate registration form
+// app.post("/registration_submit", function(req,res){
+//   let resObj ={
+//     firstname: req.body.fistname,
+//     lastname: req.body.lastname,
+//     email:req.body.email,
+//     password: req.body.password,
+//     formSubmitted: req.body.submit,
+//     msg: ""
+//   }
 
-app.post("/registration", registerUser);
+//   if (resObj.firstname === "" || resObj.lastname === "" || resObj.email ==="" || resObj.password ==="") {
+//     resObj.msg= " Field cannot be empty!";
+//   }else if ( /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(resObj.firstname)) {
+//     resObj.msg=" Your first name cannot contain any special characters!"
+//   }else{
+//     res.render("dashboard",{resObj:resObj,layout:false})
+//   }
+//   res.render("login",{resObj:resObj,layout:false});
+// });
 
 app.use((req, res) => {
   res.status(404).send("Page Not Found");

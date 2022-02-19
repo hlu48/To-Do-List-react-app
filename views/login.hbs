@@ -32,6 +32,13 @@
    Error:{{resObj.msg}}
  </div>
  {{/if}}
+
+
+ {{!-- {{#unless resObj.username}}
+ {{/unless}} --}}
+
+
+
  <form method="post" enctype="application/x-www-form-urlencoded" action="login_submit">
    <div class="container mt-3 border-shrink">
      <div class="row justify-content-center">
@@ -59,12 +66,13 @@
     </div>
 
     <div class="row justify-content-center">
-      <button type="submit" class="btn btn-primary col-md-2 mt-2">Submit</button>
+      <button type="submit" name="submit" class="btn btn-primary col-md-2 mt-2">Submit</button>
      </div>
 
    </div>
 
 </form>
+
 
 
       <!-- Footer -->
