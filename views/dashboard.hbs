@@ -1,20 +1,49 @@
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script
-      src="https://kit.fontawesome.com/6255250c8f.js"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="styleSheet.css" />
-    <title>Web Host-Dashboard</title>
-  </head>
-  <body>
-    <!-- User -->
-    <section class="dashboard">
-      <h2>Dashboard</h2>
-      <p>Welcome User!!</p>
-    </section>
-  </body>
+<!--//Name:Han Lu
+//Email : hlu48@myseneca.ca
+//ID : 123237216 
+//heroku link
+//https://han216a2.herokuapp.com/
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+        <link rel="stylesheet" href="./css/style.css">
+         <!-- icon library -->
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <title>Dashboard</title>
+    </head>
+    <body>
+        <header>
+             <!-- Logo -->
+            <div class="logo">
+                <img src="./img/icon.jpg" alt="icon goes here"> Welcome! {{resObj.username}} {{resObj.firstname}} {{resObj.lastname}}
+            </div>
+
+
+
+            <!-- Content Section -->
+            <br>
+            <div id="content-section" class="container">
+                <div class="row">
+                    <div class="col-md-4 text-center ml-5">
+                    
+                      <img id="icons" src="./img/vps.png">
+                      <p class="mt-2">Get Free and unlimited web hosting for your site</p>
+                      <button type="button" class="btn btn-danger">Free!</button>
+                    </div>
+
+                
+
+
+
+
+ <!-- Latest compiled and minified JavaScript -->
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+</body>
 </html>
