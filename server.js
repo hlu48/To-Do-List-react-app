@@ -13,6 +13,7 @@ app.use(express.static(path.join(__dirname, "./src")));
 const port = 3000;
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+
 app.engine('.hbs', exphbs.engine({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
 
@@ -43,7 +44,7 @@ app.post("/login_submit",function(req,res){
     formSubmitted: req.body.submit,
     msg: ""
   }
-
+  
   if (resObj.password === "" || resObj.username === "") {
     resObj.msg= " Username or password cannot be empty!";
     res.render("login",{resObj:resObj,layout:false});
@@ -61,26 +62,44 @@ app.post("/login_submit",function(req,res){
 app.get("/registration", (req, res) => {
   res.render("registration",{msg:"",layout:false});
 });
-//validate registration form
-// app.post("/registration_submit", function(req,res){
-//   let resObj ={
-//     firstname: req.body.fistname,
-//     lastname: req.body.lastname,
-//     email:req.body.email,
-//     password: req.body.password,
-//     formSubmitted: req.body.submit,
-//     msg: ""
-//   }
 
-//   if (resObj.firstname === "" || resObj.lastname === "" || resObj.email ==="" || resObj.password ==="") {
-//     resObj.msg= " Field cannot be empty!";
-//   }else if ( /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(resObj.firstname)) {
-//     resObj.msg=" Your first name cannot contain any special characters!"
-//   }else{
-//     res.render("dashboard",{resObj:resObj,layout:false})
-//   }
-//   res.render("login",{resObj:resObj,layout:false});
-// });
+//validate registration form
+app.post("/registration_submit", function(req,res){
+  let resObj ={
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    email:req.body.email,
+    password: req.body.password,
+    formSubmitted: req.body.submit,
+    address:req.body.address,
+    city:req.body.city,
+    province:req.body.province,
+    zip:req.body.zip,
+    msg: ""
+  }
+  const emailvalid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;  
+  const passvalid = /^(?=.*[0-9])(?=.*[!.@#$%^&*])[a-zA-Z0-9!.@#$%^&*]{6,12}$/;
+  const postalvalid= /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$/i;
+  if (resObj.firstname === "" || resObj.lastname === "" || resObj.email ==="" || resObj.password ==="" 
+  ||resObj.address ==="" || resObj.city ==="" ||resObj.zip ==="" ||resObj.province ==="Choose...") {
+    resObj.msg= " Field cannot be empty!";
+    res.render("registration",{resObj:resObj,layout:false});
+  }else if(!isNaN(resObj.city)){  
+    resObj.msg= " City cannot contain number";
+    res.render("registration",{resObj:resObj,layout:false});
+  }else if (!passvalid.test(resObj.password)){
+    resObj.msg=" Password must contain upper case, lower case letter, number, special character and between 6-12 characters in length!"
+    res.render("registration",{resObj:resObj,layout:false});
+  }else if(!emailvalid.test(resObj.email)){
+    resObj.msg=" Incorrect email form!!";
+    res.render("registration",{resObj:resObj,layout:false});
+  }else if(!postalvalid.test(resObj.zip)){
+    resObj.msg=" Invalid postal code"
+    res.render("registration",{resObj:resObj,layout:false});
+  }else{
+    res.render("dashboard",{resObj:resObj,layout:false});
+  }
+});
 
 app.use((req, res) => {
   res.status(404).send("Page Not Found");
