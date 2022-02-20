@@ -46,13 +46,15 @@ app.post("/login_submit",function(req,res){
 
   if (resObj.password === "" || resObj.username === "") {
     resObj.msg= " Username or password cannot be empty!";
+    res.render("login",{resObj:resObj,layout:false});
   }else if 
   ( /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(resObj.username)) {
     resObj.msg=" Username cannot contain any special characters!"
+    res.render("login",{resObj:resObj,layout:false});
   }else{
-    res.render("dashboard",{resObj:resObj,layout:false})
+    res.render("dashboard",{resObj:resObj,layout:false});
   }
-  res.render("login",{resObj:resObj,layout:false});
+  
 });
 
 
